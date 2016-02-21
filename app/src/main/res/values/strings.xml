@@ -5,4 +5,9 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="action_settings">Settings</string>
+    <string name="home_team_name">MI</string>
+    <string name="away_team_name">VI</string>
+    <string name="team_name">MI</string>
+    <string name="enter_score_title">Unesite rezultat</string>
+    <string name="extended_game">Produžena (opcionalno)</string>
 </resources>

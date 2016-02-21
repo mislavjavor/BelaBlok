@@ -16,58 +16,9 @@
         android:paddingBottom="10dp"
         android:background="#e53935">
 
-        <RelativeLayout
-            android:layout_width="0px"
-            android:layout_height="wrap_content"
-            android:layout_weight="1">
+        <include layout="@layout/team_score_holder"/>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="MI"
-                android:textColor="#fff"
-                android:id="@+id/blok_text_hometeam_holder"
-                android:textSize="35sp"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="10dp"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="#fff"
-                android:layout_below="@id/blok_text_hometeam_holder"
-                android:text="750"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="10dp"
-                android:textSize="20sp"/>
-
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:layout_width="0px"
-            android:layout_height="wrap_content"
-            android:layout_weight="1">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="VI"
-                android:textColor="#fff"
-                android:id="@+id/blok_text_awayteam_holder"
-                android:layout_centerHorizontal="true"
-                android:textSize="35sp"
-                android:layout_marginTop="10dp"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="#fff"
-                android:layout_below="@id/blok_text_awayteam_holder"
-                android:text="320"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="10dp"
-                android:textSize="20sp"/>
-        </RelativeLayout>
+        <include layout="@layout/team_score_holder"/>
 
     </LinearLayout>
 
