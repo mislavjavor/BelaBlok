@@ -16,9 +16,43 @@
         android:paddingBottom="10dp"
         android:background="#e53935">
 
-        <include layout="@layout/team_score_holder"/>
+        <RelativeLayout
+            android:layout_width="0px"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            xmlns:android="http://schemas.android.com/apk/res/android">
 
-        <include layout="@layout/team_score_holder"/>
+            <TextView
+                style="@style/AppTheme.TotalScoreLabelHolder"
+                android:id="@+id/home_team_total_score_name"
+                android:text="@string/home_team_name"/>
+
+            <TextView
+                style="@style/AppTheme.TotalScoreText"
+                android:layout_below="@id/home_team_total_score_name"
+                android:id="@+id/home_team_total_score_score"
+                android:text="0"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="0px"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            xmlns:android="http://schemas.android.com/apk/res/android">
+
+            <TextView
+                style="@style/AppTheme.TotalScoreLabelHolder"
+                android:id="@+id/away_team_total_score_name"
+                android:text="@string/away_team_name"/>
+
+            <TextView
+                style="@style/AppTheme.TotalScoreText"
+                android:layout_below="@id/away_team_total_score_name"
+                android:id="@+id/away_team_total_score_score"
+                android:text="0"/>
+
+        </RelativeLayout>
 
     </LinearLayout>
 

@@ -18,6 +18,7 @@ import android.text.TextWatcher
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.EditText
+import android.widget.TextView
 
 import com.couchbase.lite.Database
 import com.couchbase.lite.Document
@@ -39,32 +40,42 @@ class MainActivity : AppCompatActivity() {
 
     internal val TAG = "CouchbaseEvents"
 
-    @Bind(R.id.blok_recycler_view)
-    internal var mBlokRecyclerView: RecyclerView? = null
+    var mBlokRecyclerView: RecyclerView? = null
 
-    var models = ArrayList<SingleGameModel>()
+    private var _models = ArrayList<SingleGameModel>()
+    var models: ArrayList<SingleGameModel>
+        get() = _models
+        set(value) {
+            _models = value
+        }
+
+    var adapter : BlokRecycleViewAdapter? = null
+
+    var homeTotalScore : TextView? = null
+    var awayTotalScore : TextView? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         setContentView(R.layout.activity_main)
 
-        ButterKnife.bind(this)
-        Log.d(TAG, "Begin Couchbase Events App")
-        Log.d(TAG, "End Couchbase Events App")
+        mBlokRecyclerView = findViewById(R.id.blok_recycler_view) as RecyclerView
 
         val toolbar = findViewById(R.id.toolbar) as Toolbar
         setSupportActionBar(toolbar)
 
+        supportActionBar?.setIcon(R.drawable.toolbar_icon_nat)
+        supportActionBar?.title = ""
+
         val layoutManager = LinearLayoutManager(this)
-        val model = SingleGameModel()
-        model.awayTeamScore = 12
-        model.homeTeamScore = 14
-        models = ArrayList<SingleGameModel>()
-        models.add(model)
+        layoutManager.orientation = LinearLayoutManager.VERTICAL;
 
         mBlokRecyclerView?.layoutManager = layoutManager
-        mBlokRecyclerView?.adapter = BlokRecycleViewAdapter(models)
+        adapter = BlokRecycleViewAdapter(models, this)
+        mBlokRecyclerView?.adapter = adapter
+
+        homeTotalScore = findViewById(R.id.home_team_total_score_score) as TextView
+        awayTotalScore = findViewById(R.id.away_team_total_score_score) as TextView
 
         val fab = findViewById(R.id.fab) as FloatingActionButton
         fab.setOnClickListener { view ->
@@ -79,7 +90,7 @@ class MainActivity : AppCompatActivity() {
     var isSettingHome = false
     var isSettingAway = false
 
-    fun handleFabClick(){
+    fun handleFabClick(shouldUpdate : Boolean = false, updateIndex : Int = 0){
         val builder = AlertDialog.Builder(this)
         builder.setView(R.layout.input_result_modal)
 
@@ -153,17 +164,47 @@ class MainActivity : AppCompatActivity() {
         }
         var enterScoreButton = dialog.findViewById(R.id.enterScoreButton) as android.support.v7.widget.AppCompatButton
 
+        var cancelScoreButton = dialog.findViewById(R.id.cancel_score_button) as android.support.v7.widget.AppCompatButton
+
         enterScoreButton.setOnClickListener { view ->
             val model = SingleGameModel()
             try{
                 model.awayTeamScore = awayTeamScore.text.toString().toInt()
                 model.homeTeamScore = homeTeamScoreEt.text.toString().toInt()
-                models.add(model)
-                mBlokRecyclerView?.adapter?.notifyDataSetChanged()
+                if(shouldUpdate){
+                    adapter?.update(model, updateIndex)
+                } else {
+                    adapter?.addModel(model)
+                }
+                dialog.dismiss()
+                updateScores()
             } catch(e: Exception){
-
+                dialog.dismiss()
             }
         }
 
+        cancelScoreButton.setOnClickListener { view ->
+            dialog.dismiss();
+        }
+
+    }
+
+    fun updateScores(){
+        homeTotalScore?.text = adapter?.calculateHomeScore().toString()
+        awayTotalScore?.text = adapter?.calculateAwayScore().toString()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.main,menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        if(item?.itemId == R.id.action_undo){
+            adapter?.undo();
+        } else if(item?.itemId == R.id.action_clear){
+            adapter?.clear();
+        }
+        return super.onOptionsItemSelected(item)
     }
 }

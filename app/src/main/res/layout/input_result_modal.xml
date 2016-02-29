@@ -4,7 +4,7 @@
     android:paddingLeft="10dp"
     android:paddingRight="10dp"
     android:paddingTop="20dp"
-    android:paddingBottom="20dp"
+    android:paddingBottom="10dp"
     android:layout_height="wrap_content">
 
     <TextView
@@ -63,15 +63,37 @@
 
     </LinearLayout>
 
-    <android.support.v7.widget.AppCompatButton
-        android:theme="@style/SpecialButton"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/enterScoreButton"
         android:layout_gravity="right"
-        android:text="Unesi"
-        android:elevation="30dp"
-        android:textColor="#fff"
-        android:layout_marginTop="10dp"/>
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal">
+
+
+
+        <android.support.v7.widget.AppCompatButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/cancel_score_button"
+            android:layout_gravity="left"
+            android:text="Odustani"
+            android:elevation="30dp"
+            android:textColor="#fff"
+            />
+
+        <android.support.v7.widget.AppCompatButton
+            android:theme="@style/SpecialButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/enterScoreButton"
+            android:layout_gravity="right"
+            android:text="Unesi"
+            android:elevation="30dp"
+            android:textColor="#fff"
+            android:layout_marginTop="10dp"/>
+
+    </LinearLayout>
+
 
 </LinearLayout>
